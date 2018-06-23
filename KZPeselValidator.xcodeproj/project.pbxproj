@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		17A0AE6C20DEFF490022C252 /* KZPeselInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A0AE6B20DEFF490022C252 /* KZPeselInfo.swift */; };
+		17A0AE6D20DF03A20022C252 /* KZPeselInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A0AE6B20DEFF490022C252 /* KZPeselInfo.swift */; };
+		17A0AE6E20DF03A20022C252 /* KZPeselInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A0AE6B20DEFF490022C252 /* KZPeselInfo.swift */; };
+		17A0AE6F20DF03A20022C252 /* KZPeselInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A0AE6B20DEFF490022C252 /* KZPeselInfo.swift */; };
 		52D6D9871BEFF229002C0205 /* KZPeselValidator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* KZPeselValidator.framework */; };
 		8933C7851EB5B820000D00A4 /* KZPeselValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* KZPeselValidator.swift */; };
 		8933C7861EB5B820000D00A4 /* KZPeselValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* KZPeselValidator.swift */; };
@@ -479,6 +482,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17A0AE6E20DF03A20022C252 /* KZPeselInfo.swift in Sources */,
 				8933C7871EB5B820000D00A4 /* KZPeselValidator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -487,6 +491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17A0AE6F20DF03A20022C252 /* KZPeselInfo.swift in Sources */,
 				8933C7881EB5B820000D00A4 /* KZPeselValidator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,6 +500,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17A0AE6D20DF03A20022C252 /* KZPeselInfo.swift in Sources */,
 				8933C7861EB5B820000D00A4 /* KZPeselValidator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
   s.name         = "KZPeselValidator"
   s.version      = "0.1"
-  s.summary      = ""
+  s.summary      = "Validator for Polish national identification number PESEL "
   s.description  = <<-DESC
-    Your description here.
+    Validator for Polish national identification number PESEL
   DESC
   s.homepage     = "https://github.com/konradzdunczyk/KZPeselValidator"
   s.license      = { :type => "MIT", :file => "LICENSE" }

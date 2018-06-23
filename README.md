@@ -2,18 +2,11 @@
 > Validator for Polish national identification number PESEL
 
 [![Swift Version][swift-image]][swift-url]
-[![Build Status][travis-image]][travis-url]
 [![License][license-image]][license-url]
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/EZSwiftExtensions.svg)](https://img.shields.io/cocoapods/v/LFAlertController.svg)  
 [![Platform](https://img.shields.io/cocoapods/p/LFAlertController.svg?style=flat)](http://cocoapods.org/pods/LFAlertController)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-
-KZPeselValidator validate PESEL with two methods:
-Method one: (9×a + 7×b + 3×c + 1×d + 9×e + 7×f + 3×g + 1×h + 9×i + 7×j) % 10 == check number
-Method two: (1×a + 3×b + 7×c + 9×d + 1×e + 3×f + 7×g + 9×h + 1×i + 3×j + 1×k) % 10 == 0
-
-Letters 'a' to 'k' are subsequent numbers of PESEL number.
 
 ![](header.png)
 
@@ -25,17 +18,17 @@ Letters 'a' to 'k' are subsequent numbers of PESEL number.
 
 ## Validation details
 
-KZPeselValidator validate PESEL with two methods simultaneously:
-Method one: (9×a + 7×b + 3×c + 1×d + 9×e + 7×f + 3×g + 1×h + 9×i + 7×j) % 10 == check number (last digit of PESEL)
-Method two: (1×a + 3×b + 7×c + 9×d + 1×e + 3×f + 7×g + 9×h + 1×i + 3×j + 1×k) % 10 == 0
-
+KZPeselValidator validate PESEL with two methods simultaneously:  
+Method one: (9×a + 7×b + 3×c + 1×d + 9×e + 7×f + 3×g + 1×h + 9×i + 7×j) % 10 == check number (last digit of PESEL)  
+Method two: (1×a + 3×b + 7×c + 9×d + 1×e + 3×f + 7×g + 9×h + 1×i + 3×j + 1×k) % 10 == 0  
+  
 Letters 'a' to 'k' are subsequent numbers of PESEL number.
 
 ## Requirements
 
 - iOS 8.0+
-- Xcode 7.3
-- Swift 3.3
+- Xcode 9.0+
+- Swift 3.3+
 
 ## Installation
 
@@ -99,3 +92,8 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 ## Attributions
 
 I've used [SwiftPlate](https://github.com/JohnSundell/SwiftPlate) to generate xcodeproj compatible with CocoaPods and Carthage.
+
+[swift-image]:https://img.shields.io/badge/swift-3.3-orange.svg
+[swift-url]: https://swift.org/
+[license-image]: https://img.shields.io/badge/License-MIT-blue.svg
+[license-url]: LICENSE

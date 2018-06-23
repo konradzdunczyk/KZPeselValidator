@@ -14,7 +14,7 @@ public struct KZPeselInfo {
         case female
     }
 
-    let pesel: String
-    let birthDate: Date
-    let sex: Sex
+    public let pesel: String
+    public let birthDate: Date
+    public let sex: Sex
 }

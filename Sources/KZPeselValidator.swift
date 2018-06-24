@@ -14,145 +14,45 @@ public class KZPeselValidator {
         case invalid
     }
 
-    private enum BirthYears {
-        case eighteenHundreds
-        case nineteenHundreds
-        case twentyHundreds
-        case twentyOneHundreds
-        case twentyTwoHundreds
-
-        var monthOffset: Int {
-            switch self {
-            case .eighteenHundreds: return 80
-            case .nineteenHundreds: return 0
-            case .twentyHundreds: return 20
-            case .twentyOneHundreds: return 40
-            case .twentyTwoHundreds: return 60
-            }
-        }
-
-        var monthRange: CountableClosedRange<Int> {
-            return (monthOffset + 1...monthOffset + 12)
-        }
-
-        var base: Int {
-            switch self {
-            case .eighteenHundreds: return 1800
-            case .nineteenHundreds: return 1900
-            case .twentyHundreds: return 2000
-            case .twentyOneHundreds: return 2100
-            case .twentyTwoHundreds: return 2200
-            }
-        }
-
-        static var allCases: [BirthYears] {
-            return [
-                .eighteenHundreds,
-                .nineteenHundreds,
-                .twentyHundreds,
-                .twentyOneHundreds,
-                .twentyTwoHundreds
-            ]
-        }
-
-        static func getYears(for monthWithYearsOffset: Int) -> BirthYears {
-            for years in BirthYears.allCases {
-                if years.monthRange.contains(monthWithYearsOffset) {
-                    return years
-                }
-            }
-
-            fatalError()
-        }
-    }
-
-    static let peselValidLength: Int = 11
-    static let sexIndex: Int = 9
-    static let magicNumbersOne: [Int] = [9, 7, 3, 1, 9, 7, 3, 1, 9, 7]
-    static let magicNumbersTwo: [Int] = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3, 1]
-
-    public let pesel: String
+    public let peselNumber: String
     private var result: Result?
 
     public init(pesel: String) {
-        self.pesel = pesel
+        self.peselNumber = pesel
     }
 
     public func validate() -> Result {
-        if let result = result { return result }
+        if let result = self.result { return result }
 
-        let filteredPesel = pesel.filter({ Int(String($0)) != nil })
-        guard filteredPesel.count == KZPeselValidator.peselValidLength else {
-            self.result = .invalid
-            return .invalid
+        var result: Result = .invalid
+        defer {
+            self.result = result
         }
 
-        let peselNumbers = filteredPesel.map({ return Int(String($0))! })
+        guard let pesel = KZPesel(pesel: peselNumber) else { return result }
+        guard checkChecksum(pesel: pesel) else { return result }
+        guard let peselParser = KZPeselParser(pesel: pesel) else { return result }
 
-        guard checkChecksum(peselNumbers: peselNumbers) else {
-            self.result = .invalid
-            return .invalid
-        }
+        result = .valid(peselInfo: peselParser.peselInfo)
 
-        let sex = getSex(peselNumbers: peselNumbers)
-        let birthDate = getBirthDate(peselNumbers: peselNumbers)
-        let peselInfo = KZPeselInfo(pesel: pesel, birthDate: birthDate, sex: sex)
-
-        self.result = .valid(peselInfo: peselInfo)
-        return .valid(peselInfo: peselInfo)
+        return result
     }
 
-    private func getSex(peselNumbers: [Int]) -> KZPeselInfo.Sex {
-        precondition(peselNumbers.count == KZPeselValidator.peselValidLength, "Wrong pesel length")
-
-        return peselNumbers[KZPeselValidator.sexIndex] % 2 == 0 ? .female : .male
+    private func checkChecksum(pesel: KZPesel) -> Bool {
+        return validateWithMethodOne(pesel: pesel) &&
+            validateWithMethodTwo(pesel: pesel)
     }
 
-    private func getBirthDate(peselNumbers: [Int]) -> Date {
-        precondition(peselNumbers.count == KZPeselValidator.peselValidLength, "Wrong pesel length")
-
-        let yearSufix: Int = peselNumbers[0] * 10 + peselNumbers[1]
-        let monthWithYearsOffset: Int = peselNumbers[2] * 10 + peselNumbers[3]
-        let day: Int = peselNumbers[4] * 10 + peselNumbers[5]
-        let years = BirthYears.getYears(for: monthWithYearsOffset)
-        let month: Int = monthWithYearsOffset - years.monthOffset
-        let year: Int = yearSufix + years.base
-
-        let dateComponents = DateComponents(calendar: Calendar.current,
-                                            timeZone: TimeZone(abbreviation: "GMT+1"),
-                                            year: year,
-                                            month: month,
-                                            day: day,
-                                            hour: 0,
-                                            minute: 0,
-                                            second: 0)
-
-        return dateComponents.date!
-    }
-
-    private func checkChecksum(peselNumbers: [Int]) -> Bool {
-        precondition(peselNumbers.count == KZPeselValidator.peselValidLength, "Wrong pesel length")
-
-        return validateWithMethodOne(peselNumbers: peselNumbers) &&
-            validateWithMethodTwo(peselNumbers: peselNumbers)
-    }
-
-    private func validateWithMethodOne(peselNumbers: [Int]) -> Bool {
-        precondition(peselNumbers.count == KZPeselValidator.peselValidLength, "Wrong pesel length")
-
-        guard let checkNumber = peselNumbers.last else { return false }
-
-        let methodOneResult = zip(KZPeselValidator.magicNumbersOne, peselNumbers)
+    private func validateWithMethodOne(pesel: KZPesel) -> Bool {
+        let methodOneResult = zip(KZPeselSpec.validationMethodOneNumbersWeights, pesel.peselNumbers)
             .map({ $0 * $1 })
             .reduce(0, +)
 
-        return methodOneResult % 10 == checkNumber
+        return methodOneResult % 10 == pesel.checkNumber
     }
 
-    private func validateWithMethodTwo(peselNumbers: [Int]) -> Bool {
-        precondition(peselNumbers.count == KZPeselValidator.peselValidLength, "Wrong pesel length")
-
-        let methodTwoResult = zip(KZPeselValidator.magicNumbersTwo, peselNumbers)
+    private func validateWithMethodTwo(pesel: KZPesel) -> Bool {
+        let methodTwoResult = zip(KZPeselSpec.validationMethodTwoNumbersWeights, pesel.peselNumbers)
             .map({ $0 * $1 })
             .reduce(0, +)
 

@@ -9,12 +9,7 @@
 import Foundation
 
 public struct KZPeselInfo {
-    public enum Sex {
-        case male
-        case female
-    }
-
     public let pesel: String
-    public let birthDate: Date
-    public let sex: Sex
+    public let birthDateComponents: DateComponents
+    public let sex: KZPeselSex
 }

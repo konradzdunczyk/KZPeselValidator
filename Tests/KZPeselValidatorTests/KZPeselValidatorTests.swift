@@ -11,13 +11,28 @@ import XCTest
 import KZPeselValidator
 
 class KZPeselValidatorTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        //// XCTAssertEqual(KZPeselValidator().text, "Hello, World!")
+    let correctFemalePesel: String = "76111117302"
+
+    func testThatValidatorReturnInvalidResultForPeselWithWrongCheckNumber() {
+        let incorrectPesel = "76111117301"
+        let sut = KZPeselValidator()
+
+        switch sut.validate(peselNumber: incorrectPesel) {
+        case .valid:
+            XCTFail()
+        case .invalid(let peselNumber):
+            XCTAssertEqual(peselNumber, incorrectPesel)
+        }
     }
-    
-    static var allTests = [
-        ("testExample", testExample),
-    ]
+
+    func testThatValidatorReturnValidResultForCorrectPesel() {
+        let sut = KZPeselValidator()
+
+        switch sut.validate(peselNumber: correctFemalePesel) {
+        case .valid(let peselNumber):
+            XCTAssertEqual(peselNumber, correctFemalePesel)
+        case .invalid:
+            XCTFail()
+        }
+    }
 }

@@ -21,7 +21,7 @@
 KZPeselValidator validate PESEL with two methods simultaneously:  
 Method one: (9×a + 7×b + 3×c + 1×d + 9×e + 7×f + 3×g + 1×h + 9×i + 7×j) % 10 == check number (last digit of PESEL)  
 Method two: (1×a + 3×b + 7×c + 9×d + 1×e + 3×f + 7×g + 9×h + 1×i + 3×j + 1×k) % 10 == 0  
-  
+
 Letters 'a' to 'k' are subsequent numbers of PESEL number.
 
 ## Requirements
@@ -54,26 +54,47 @@ github "konradzdunczyk/KZPeselValidator"
 
 ## Usage example
 
+### Validation only
 ```swift
 import KZPeselValidator
 
-let validator = KZPeselValidator(pesel: "76040117112")
-let validationResult = validator.validate()
+let peselValidator = KZPeselValidator()
+let peselValidationResult = peselValidator.validate(peselNumber: "76040117112")
 
-switch validationResult {
-case .valid(let peselInfo):
-  print("Pesel \(peselInfo.pesel) is valid")
-  print("Birthdate: \(peselInfo.birthDate)")
-  print("Sex: ", terminator: "")
+switch peselValidationResult {
+case .valid(let peselNumber):
+    print("Pesel \(peselNumber) is valid")
+case .invalid(let peselNumber):
+    print("Pesel \(peselNumber) is invalid")
+}
+```
 
-  switch peselInfo.sex {
-  case .male:
-    print("male")
-  case .female:
-    print("female")
-  }
-case .invalid:
-  print("Pesel \(validator.pesel) is invalid")
+### Validation with parsing
+```swift
+import KZPeselValidator
+
+let peselParser = KZPeselParser()
+let parseResult = peselParser.parse(peselNumber: "76040117112")
+
+switch parseResult {
+case .success(let peselInfo):
+    var birthDateComponents = peselInfo.birthDateComponents
+
+    // date from birthDateComponents without calendar is invalid!
+    birthDateComponents.calendar = Calendar.current
+
+    print("Pesel \(peselInfo.pesel) is valid")
+    print("Birthdate: \(birthDateComponents.date!)")
+    print("Sex: ", terminator: "")
+
+    switch peselInfo.sex {
+    case .male:
+        print("male")
+    case .female:
+        print("female")
+    }
+case .peselInvalid(let peselNumber):
+    print("Pesel \(peselNumber) is invalid")
 }
 ```
 

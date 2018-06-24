@@ -30,6 +30,9 @@
 		1736D8E720DFFE8600F6DE73 /* KZPeselTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D8E620DFFE8600F6DE73 /* KZPeselTests.swift */; };
 		1736D8E820DFFE8600F6DE73 /* KZPeselTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D8E620DFFE8600F6DE73 /* KZPeselTests.swift */; };
 		1736D8E920DFFE8600F6DE73 /* KZPeselTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D8E620DFFE8600F6DE73 /* KZPeselTests.swift */; };
+		1736D8EB20E00E4F00F6DE73 /* KZPeselParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D8EA20E00E4F00F6DE73 /* KZPeselParserTests.swift */; };
+		1736D8EC20E00E4F00F6DE73 /* KZPeselParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D8EA20E00E4F00F6DE73 /* KZPeselParserTests.swift */; };
+		1736D8ED20E00E4F00F6DE73 /* KZPeselParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D8EA20E00E4F00F6DE73 /* KZPeselParserTests.swift */; };
 		17A0AE6C20DEFF490022C252 /* KZPeselInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A0AE6B20DEFF490022C252 /* KZPeselInfo.swift */; };
 		17A0AE6D20DF03A20022C252 /* KZPeselInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A0AE6B20DEFF490022C252 /* KZPeselInfo.swift */; };
 		17A0AE6E20DF03A20022C252 /* KZPeselInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A0AE6B20DEFF490022C252 /* KZPeselInfo.swift */; };
@@ -77,6 +80,7 @@
 		1736D8D320DFA63B00F6DE73 /* KZPeselParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZPeselParser.swift; sourceTree = "<group>"; };
 		1736D8E120DFA76600F6DE73 /* KZPeselSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZPeselSpec.swift; sourceTree = "<group>"; };
 		1736D8E620DFFE8600F6DE73 /* KZPeselTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZPeselTests.swift; sourceTree = "<group>"; };
+		1736D8EA20E00E4F00F6DE73 /* KZPeselParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZPeselParserTests.swift; sourceTree = "<group>"; };
 		17A0AE6B20DEFF490022C252 /* KZPeselInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZPeselInfo.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* KZPeselValidator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KZPeselValidator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* KZPeselValidator-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KZPeselValidator-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,6 +203,7 @@
 			children = (
 				8933C7891EB5B82A000D00A4 /* KZPeselValidatorTests.swift */,
 				1736D8E620DFFE8600F6DE73 /* KZPeselTests.swift */,
+				1736D8EA20E00E4F00F6DE73 /* KZPeselParserTests.swift */,
 			);
 			name = Tests;
 			path = Tests/KZPeselValidatorTests;
@@ -514,6 +519,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1736D8EB20E00E4F00F6DE73 /* KZPeselParserTests.swift in Sources */,
 				1736D8E720DFFE8600F6DE73 /* KZPeselTests.swift in Sources */,
 				8933C7901EB5B82D000D00A4 /* KZPeselValidatorTests.swift in Sources */,
 			);
@@ -565,6 +571,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1736D8EC20E00E4F00F6DE73 /* KZPeselParserTests.swift in Sources */,
 				1736D8E820DFFE8600F6DE73 /* KZPeselTests.swift in Sources */,
 				8933C78F1EB5B82C000D00A4 /* KZPeselValidatorTests.swift in Sources */,
 			);
@@ -574,6 +581,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1736D8ED20E00E4F00F6DE73 /* KZPeselParserTests.swift in Sources */,
 				1736D8E920DFFE8600F6DE73 /* KZPeselTests.swift in Sources */,
 				8933C78E1EB5B82C000D00A4 /* KZPeselValidatorTests.swift in Sources */,
 			);

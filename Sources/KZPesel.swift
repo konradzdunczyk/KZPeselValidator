@@ -12,7 +12,7 @@ public struct KZPesel: KZPeselType {
     public let pesel: String
     public let peselNumbers: [Int]
 
-    init?(pesel: String) {
+    public init?(pesel: String) {
         guard pesel.count == KZPeselSpec.peselValidLength else {
             return nil
         }

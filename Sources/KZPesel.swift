@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct KZPesel: KZPeselType {
-    let pesel: String
-    let peselNumbers: [Int]
+public struct KZPesel: KZPeselType {
+    public let pesel: String
+    public let peselNumbers: [Int]
 
     init?(pesel: String) {
         guard pesel.count == KZPeselSpec.peselValidLength else {
@@ -27,23 +27,23 @@ struct KZPesel: KZPeselType {
         self.peselNumbers = peselNumbers
     }
 
-    var checkNumber: Int {
+    public var checkNumber: Int {
         return peselNumbers[10]
     }
 
-    var yearSufix: Int {
+    public var yearSufix: Int {
         return peselNumbers[0] * 10 + peselNumbers[1]
     }
 
-    var monthWithYearsOffset: Int {
+    public var monthWithYearsOffset: Int {
         return peselNumbers[2] * 10 + peselNumbers[3]
     }
 
-    var day: Int {
+    public var day: Int {
         return peselNumbers[4] * 10 + peselNumbers[5]
     }
 
-    var sexNumber: Int {
+    public var sexNumber: Int {
         return peselNumbers[9]
     }
 }

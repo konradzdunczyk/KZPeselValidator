@@ -8,25 +8,14 @@
 
 import Foundation
 
-protocol KZPeselParserType {
-    var peselNumber: String { get }
-    var peselInfo: KZPeselInfo { get }
+public enum KZPeselParseResult {
+    case success(peselInfo: KZPeselInfo)
+    case peselInvalid(peselNumber: String)
 }
 
-class KZPeselParser: KZPeselParserType {
-    public var peselNumber: String {
-        return pesel.pesel
-    }
-
-    public var peselInfo: KZPeselInfo {
-        return KZPeselInfo(pesel: pesel.pesel,
-                           birthDateComponents: birthDateComponents,
-                           sex: sex)
-    }
-
-    private let pesel: KZPeselType
-    private let birthYears: KZBirthYearsType
-    private let birthYearsCollection: [KZBirthYearsType] = [
+public class KZPeselParser: KZPeselParserType {
+    public var peselValidator: KZPeselValidatorType = KZPeselValidator()
+    var birthYearsCollection: [KZBirthYearsType] = [
         KZBirthYears.eighteenHundreds,
         KZBirthYears.nineteenHundreds,
         KZBirthYears.twentyHundreds,
@@ -34,30 +23,39 @@ class KZPeselParser: KZPeselParserType {
         KZBirthYears.twentyTwoHundreds
     ]
 
-    private var sex: KZPeselSex {
+    public init() { }
+
+    public func parse(peselNumber: String) -> KZPeselParseResult {
+        guard let pesel = KZPesel(pesel: peselNumber),
+              case KZPeselValidationResult.valid(_) = peselValidator.validate(pesel: pesel),
+              let birthDateComponents = findBirthDateComponents(for: pesel) else {
+            return .peselInvalid(peselNumber: peselNumber)
+        }
+
+        let sex: KZPeselSex = getSex(for: pesel)
+        let peselInfo = KZPeselInfo(pesel: pesel.pesel,
+                                    birthDateComponents: birthDateComponents,
+                                    sex: sex)
+
+        return .success(peselInfo: peselInfo)
+    }
+
+    private func getSex(for pesel: KZPeselType) -> KZPeselSex {
         return pesel.sexNumber % 2 == 0 ? .female : .male
     }
 
-    private var birthDateComponents: DateComponents {
+    private func findBirthDateComponents(for pesel: KZPeselType) -> DateComponents? {
+        let maybeBirthYears = birthYearsCollection.first(where: {
+            $0.monthWithOffsetRange.contains(pesel.monthWithYearsOffset)
+        })
+        guard let birthYears = maybeBirthYears else { return nil }
+
         let day: Int = pesel.day
         let month: Int = pesel.monthWithYearsOffset - birthYears.monthOffset
         let year: Int = pesel.yearSufix + birthYears.base
 
-        let dateComponents = DateComponents(year: year,
-                                            month: month,
-                                            day: day)
-
-        return dateComponents
-    }
-
-    public init?(pesel: KZPeselType) {
-        let maybeBirthYears = birthYearsCollection.first(where: {
-            $0.monthWithOffsetRange.contains(pesel.monthWithYearsOffset)
-        })
-
-        guard let birthYears = maybeBirthYears else { return nil }
-
-        self.pesel = pesel
-        self.birthYears = birthYears
+        return DateComponents(year: year,
+                              month: month,
+                              day: day)
     }
 }

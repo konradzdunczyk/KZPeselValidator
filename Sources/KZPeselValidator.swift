@@ -8,42 +8,29 @@
 
 import Foundation
 
-public class KZPeselValidator {
-    public enum Result {
-        case valid(peselInfo: KZPeselInfo)
-        case invalid
-    }
+public class KZPeselValidator: KZPeselValidatorType {
+    public init() { }
 
-    public let peselNumber: String
-    private var result: Result?
-
-    public init(pesel: String) {
-        self.peselNumber = pesel
-    }
-
-    public func validate() -> Result {
-        if let result = self.result { return result }
-
-        var result: Result = .invalid
-        defer {
-            self.result = result
+    public func validate(peselNumber: String) -> KZPeselValidationResult {
+        guard let pesel = KZPesel(pesel: peselNumber) else {
+            return .invalid(peselNumber: peselNumber)
         }
 
-        guard let pesel = KZPesel(pesel: peselNumber) else { return result }
-        guard checkChecksum(pesel: pesel) else { return result }
-        guard let peselParser = KZPeselParser(pesel: pesel) else { return result }
-
-        result = .valid(peselInfo: peselParser.peselInfo)
-
-        return result
+        return validate(pesel: pesel)
     }
 
-    private func checkChecksum(pesel: KZPesel) -> Bool {
+    public func validate(pesel: KZPeselType) -> KZPeselValidationResult {
+        guard checkChecksum(pesel: pesel) else { return .invalid(peselNumber: pesel.pesel) }
+
+        return .valid(peselNumber: pesel.pesel)
+    }
+
+    private func checkChecksum(pesel: KZPeselType) -> Bool {
         return validateWithMethodOne(pesel: pesel) &&
             validateWithMethodTwo(pesel: pesel)
     }
 
-    private func validateWithMethodOne(pesel: KZPesel) -> Bool {
+    private func validateWithMethodOne(pesel: KZPeselType) -> Bool {
         let methodOneResult = zip(KZPeselSpec.validationMethodOneNumbersWeights, pesel.peselNumbers)
             .map({ $0 * $1 })
             .reduce(0, +)
@@ -51,7 +38,7 @@ public class KZPeselValidator {
         return methodOneResult % 10 == pesel.checkNumber
     }
 
-    private func validateWithMethodTwo(pesel: KZPesel) -> Bool {
+    private func validateWithMethodTwo(pesel: KZPeselType) -> Bool {
         let methodTwoResult = zip(KZPeselSpec.validationMethodTwoNumbersWeights, pesel.peselNumbers)
             .map({ $0 * $1 })
             .reduce(0, +)

@@ -13,7 +13,21 @@ public enum KZPeselSex {
     case female
 }
 
-protocol KZPeselType {
+public enum KZPeselValidationResult {
+    case valid(peselNumber: String)
+    case invalid(peselNumber: String)
+}
+
+public protocol KZPeselValidatorType {
+    func validate(peselNumber: String) -> KZPeselValidationResult
+    func validate(pesel: KZPeselType) -> KZPeselValidationResult
+}
+
+public protocol KZPeselParserType {
+    func parse(peselNumber: String) -> KZPeselParseResult
+}
+
+public protocol KZPeselType {
     var pesel: String { get }
     var peselNumbers: [Int] { get }
     var checkNumber: Int { get }

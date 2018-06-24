@@ -21,7 +21,7 @@
 KZPeselValidator validate PESEL with two methods simultaneously:  
 Method one: (9×a + 7×b + 3×c + 1×d + 9×e + 7×f + 3×g + 1×h + 9×i + 7×j) % 10 == check number (last digit of PESEL)  
 Method two: (1×a + 3×b + 7×c + 9×d + 1×e + 3×f + 7×g + 9×h + 1×i + 3×j + 1×k) % 10 == 0  
-  
+
 Letters 'a' to 'k' are subsequent numbers of PESEL number.
 
 ## Requirements
@@ -62,8 +62,13 @@ let validationResult = validator.validate()
 
 switch validationResult {
 case .valid(let peselInfo):
+  var birthDateComponents = peselInfo.birthDateComponents
+
+  // birthDateComponents without calendar are invalid!
+  birthDateComponents.calendar = Calendar.current
+
   print("Pesel \(peselInfo.pesel) is valid")
-  print("Birthdate: \(peselInfo.birthDate)")
+  print("Birthdate: \(birthDateComponents.date!)")
   print("Sex: ", terminator: "")
 
   switch peselInfo.sex {

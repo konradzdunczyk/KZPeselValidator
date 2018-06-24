@@ -54,31 +54,47 @@ github "konradzdunczyk/KZPeselValidator"
 
 ## Usage example
 
+### Validation only
 ```swift
 import KZPeselValidator
 
-let validator = KZPeselValidator(pesel: "76040117112")
-let validationResult = validator.validate()
+let peselValidator = KZPeselValidator()
+let peselValidationResult = peselValidator.validate(peselNumber: "76040117112")
 
-switch validationResult {
-case .valid(let peselInfo):
-  var birthDateComponents = peselInfo.birthDateComponents
+switch peselValidationResult {
+case .valid(let peselNumber):
+    print("Pesel \(peselNumber) is valid")
+case .invalid(let peselNumber):
+    print("Pesel \(peselNumber) is invalid")
+}
+```
 
-  // birthDateComponents without calendar are invalid!
-  birthDateComponents.calendar = Calendar.current
+### Validation with parsing
+```swift
+import KZPeselValidator
 
-  print("Pesel \(peselInfo.pesel) is valid")
-  print("Birthdate: \(birthDateComponents.date!)")
-  print("Sex: ", terminator: "")
+let peselParser = KZPeselParser()
+let parseResult = peselParser.parse(peselNumber: "76040117112")
 
-  switch peselInfo.sex {
-  case .male:
-    print("male")
-  case .female:
-    print("female")
-  }
-case .invalid:
-  print("Pesel \(validator.pesel) is invalid")
+switch parseResult {
+case .success(let peselInfo):
+    var birthDateComponents = peselInfo.birthDateComponents
+
+    // date from birthDateComponents without calendar is invalid!
+    birthDateComponents.calendar = Calendar.current
+
+    print("Pesel \(peselInfo.pesel) is valid")
+    print("Birthdate: \(birthDateComponents.date!)")
+    print("Sex: ", terminator: "")
+
+    switch peselInfo.sex {
+    case .male:
+        print("male")
+    case .female:
+        print("female")
+    }
+case .peselInvalid(let peselNumber):
+    print("Pesel \(peselNumber) is invalid")
 }
 ```
 

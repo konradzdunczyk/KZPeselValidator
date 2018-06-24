@@ -17,7 +17,11 @@ public struct KZPesel: KZPeselType {
             return nil
         }
 
+        #if swift(>=4.1)
         let peselNumbers: [Int] = pesel.compactMap({ Int(String($0)) })
+        #else
+        let peselNumbers: [Int] = pesel.flatMap({ Int(String($0)) })
+        #endif
 
         guard peselNumbers.count == KZPeselSpec.peselValidLength else {
             return nil

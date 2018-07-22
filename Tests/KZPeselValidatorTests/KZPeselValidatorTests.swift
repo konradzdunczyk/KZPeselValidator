@@ -25,6 +25,18 @@ class KZPeselValidatorTests: XCTestCase {
         }
     }
 
+    func testThatValidatorReturnInvalidResultForPeselWithAllZeroNumbers() {
+        let incorrectPesel = "00000000000"
+        let sut = KZPeselValidator()
+
+        switch sut.validate(peselNumber: incorrectPesel) {
+        case .valid:
+            XCTFail()
+        case .invalid(let peselNumber):
+            XCTAssertEqual(peselNumber, incorrectPesel)
+        }
+    }
+
     func testThatValidatorReturnValidResultForCorrectPesel() {
         let sut = KZPeselValidator()
 

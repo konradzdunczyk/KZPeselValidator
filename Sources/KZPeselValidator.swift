@@ -35,7 +35,7 @@ public class KZPeselValidator: KZPeselValidatorType {
             .map({ $0 * $1 })
             .reduce(0, +)
 
-        return methodOneResult % 10 == pesel.checkNumber
+        return methodOneResult != 0 && methodOneResult % 10 == pesel.checkNumber
     }
 
     private func validateWithMethodTwo(pesel: KZPeselType) -> Bool {
@@ -43,6 +43,6 @@ public class KZPeselValidator: KZPeselValidatorType {
             .map({ $0 * $1 })
             .reduce(0, +)
 
-        return methodTwoResult % 10 == 0
+        return methodTwoResult != 0 && methodTwoResult % 10 == 0
     }
 }

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "KZPeselValidator"
-  s.version      = "0.6"
+  s.version      = "1.0"
   s.summary      = "Validator for Polish national identification number PESEL "
   s.description  = <<-DESC
     Validator for Polish national identification number PESEL

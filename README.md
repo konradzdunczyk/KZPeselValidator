@@ -8,8 +8,6 @@
 [![Platform](https://img.shields.io/cocoapods/p/LFAlertController.svg?style=flat)](http://cocoapods.org/pods/LFAlertController)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-![](header.png)
-
 ## Features
 
 - [x] Validate PESEL number
@@ -35,10 +33,19 @@ Letters 'a' to 'k' are subsequent numbers of PESEL number.
 #### CocoaPods
 You can use [CocoaPods](http://cocoapods.org/) to install `KZPeselValidator` by adding it to your `Podfile`:
 
+For Swift 5.0:
 ```ruby
 platform :ios, '8.0'
 use_frameworks!
 pod 'KZPeselValidator'
+```
+
+
+For Swift 4.2:
+```ruby
+platform :ios, '8.0'
+use_frameworks!
+pod 'KZPeselValidator', '= 0.6'
 ```
 
 #### Carthage
